@@ -1,15 +1,16 @@
+import { Outlet } from 'react-router-dom'
 import './App.css'
-import HomePage from './pages/HomePage'
 
 function App() {
   return (
     <>
-      <h1 className="text-3xl font-bold text-blue-500">
-        Book app
-      </h1>
-      <HomePage />
+      <nav>Navigation</nav>
+      <main className='min-h-screen max-w-screen-2xl mx-auto px-4 py-6'>
+        <Outlet />
+      </main>
+      <footer>Footer</footer>
     </>
   )
-}
+};
 
-export default App
+export default App;
