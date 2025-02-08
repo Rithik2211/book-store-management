@@ -14,12 +14,12 @@ const HomePage = () => {
         isParent : false,
         title : ""
     });
-    const handleFetch = (route: string) => {
-        fetch(`http://localhost:3000${route}`)
-        .then(res => res.json())
-        .then(data => setUserdata(data))
-        .catch(err => console.log("fetch error", err))
-    }
+    // const handleFetch = (route: string) => {
+    //     fetch(`http://localhost:3000${route}`)
+    //     .then(res => res.json())
+    //     .then(data => setUserdata(data))
+    //     .catch(err => console.log("fetch error", err))
+    // }
   return (
     <div className='flex justify-between items-end flex-col gap-2 text-black'>
         <div className=''>
