@@ -11,6 +11,7 @@ export default {
       },
       colors: {
         'button': ['FFCE1A'],
+        'text': ['0D0842'],
       }
     },
   },
