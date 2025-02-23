@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'primary' : ["Montserrat", "sans-serif"]
+        'primary' : ["Montserrat", "sans-serif"],
+        'secondary' : ["Nunito Sans", "sans-serif"],
       },
       colors: {
         'button': ['FFCE1A'],
