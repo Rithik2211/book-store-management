@@ -8,24 +8,24 @@ const TopSellerSection = () => {
     setAge(event.target.value as string);
   };
 
-  // const dropdown = [
-  //   {
-  //     value: 'fiction',
-  //     label: 'Fiction',
-  //   },
-  //   {
-  //     value: 'romance',
-  //     label: 'Romance',
-  //   },
-  //   {
-  //     value: 'mystery',
-  //     label: 'Mystery',
-  //   },
-  //   {
-  //     value: 'horror',
-  //     label: 'Horror',
-  //   },
-  // ]
+  const dropdown = [
+    {
+      value: 'fiction',
+      label: 'Fiction',
+    },
+    {
+      value: 'romance',
+      label: 'Romance',
+    },
+    {
+      value: 'mystery',
+      label: 'Mystery',
+    },
+    {
+      value: 'horror',
+      label: 'Horror',
+    },
+  ]
 
   return (
     <div className='flex flex-col justify-between items-center max-w-7xl w-full  gap-5 lg:gap-[180px]'>
@@ -37,11 +37,11 @@ const TopSellerSection = () => {
           label="Category"
           onChange={handleChange}
         >
-          {/* {
+          {
             dropdown?.map((item, index) => (
               <MenuItem  key={index} value={item.value}>{item.label}</MenuItem>
             ))
-          } */}
+          }
         </Select>
       </FormControl>
       <div className=''>
