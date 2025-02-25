@@ -15,17 +15,17 @@ const PriceCard: FC<PricardProps> = ({title, description, coverImage, oldPrice, 
                     <img
                         src={`/books/${coverImage}`}
                         alt=""
-                        className="w-full bg-cover p-2 rounded-md cursor-pointer hover:scale-105 transition-all duration-200"
+                        className="w-full bg-cover p-2 rounded-md cursor-pointer "
                     />
                 </div>
 
-                <div className='p-4 flex flex-col justify-center items-center'>
-                    <h3 className="text-xl font-semibold hover:text-blue-600 mb-3">
+                <div className='p-4 flex flex-col justify-start items-start text-start'>
+                    <h3 className="text-md font-medium text-[#0D0842] mb-3">
                         {title}
                     </h3>
-                    <p className="text-gray-600 mb-5 line-clamp-2">{description}</p>
-                    <p className="font-medium mb-5">
-                        ${oldPrice} <span className="line-through font-normal ml-2">${newPrice}</span>
+                    <p className="text-sm text-[#0D0842] mb-5 line-clamp-2">{description}</p>
+                    <p className="font-normal mb-5">
+                        ${newPrice} <span className="line-through font-normal ml-2">${oldPrice}</span>
                     </p>
                     <div className=''>
                         <button className='bg-button text-white px-5 py-1 rounded-[8px] flex flex-row gap-1 md:gap-3 text-sm focus:outline-none'><img src='/basket.svg' alt='basket' className='w-3 h-5' />Basket</button>
