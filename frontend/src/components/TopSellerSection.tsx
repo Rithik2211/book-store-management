@@ -1,51 +1,46 @@
 import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PriceCard from './PriceCard';
 import Slider from "react-slick";
 import Blog from '../data/blog.json';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { dropdown } from '../data/dropdown';
+
+export interface FilterBooksProps{
+  _id: number;
+  title: string;
+  description: string;
+  category: string;
+  trending: boolean;
+  coverImage: string;
+  oldPrice: number;
+  newPrice: number;
+}
 
 const TopSellerSection = () => {
-  const [category, setCategory] = React.useState('');
+  const [category, setCategory] = useState('books');
+  const [filterBooks, setFilterBooks] = useState<FilterBooksProps[]>([]);
 
   const handleChange = (event: SelectChangeEvent) => {
+    event.preventDefault();
     setCategory(event.target.value as string);
   };
 
-  const dropdown = [
-    {
-      value: 'business',
-      label: 'Business',
-    },
-    {
-      value: 'books',
-      label: 'Books',
-    },
-    {
-      value: 'marketing',
-      label: 'Marketing',
-    },
-    {
-      value: 'horror',
-      label: 'Horror',
-    },
-    {
-      value: 'fiction',
-      label: 'Fiction',
-    },
-    {
-      value: 'adventure',
-      label: 'Adventure',
-    },
-  ]
+  useEffect(() => {
+    const filteredBooks = Blog.filter((book) => book.category === category);
+    setFilterBooks(filteredBooks);
+  },[category])
 
-  const settings = {
-    dots: true,
+
+  
+ const settings = {
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 2,
+    // nextArrow: true,
     responsive: [
       {
         breakpoint: 1024,
@@ -75,25 +70,40 @@ const TopSellerSection = () => {
   };
 
   return (
-    <div className='flex flex-col justify-between items-center max-w-7xl w-full  gap-5 mb-[20px]'>
-     <FormControl className='w-[150px]'>
-        <InputLabel id="category-select-label">Category</InputLabel>
+    <div className='flex flex-col justify-center items-start max-w-7xl w-full  gap-5 mb-[20px]'>
+      <div>
+        <h2 className='text-2xl text-text font-semibold'>Top Sellers</h2>
+      </div>
+     <div >
+      <FormControl fullWidth sx={{ mt: 2 }}>
         <Select
-          labelId="category-select-label"
-          id="category-select"
           value={category}
-          label="Category"
           onChange={handleChange}
+          displayEmpty
+          style={{ 
+            backgroundColor: '#EAEAEA', 
+            fontSize: '0.875rem',
+            padding: '0',
+            height: '30px',
+            width: '200px',
+            textAlign: 'start',
+          }}
+          sx={{
+            '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
+            '&:hover .MuiOutlinedInput-notchedOutline': { border: 'none' },
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': { border: 'none' }
+          }}
         >
           {dropdown.map((item, index) => (
             <MenuItem key={index} value={item.value}>{item.label}</MenuItem>
           ))}
         </Select>
       </FormControl>
-      <div className='w-full slider-container my-[40px]'>
+     </div>
+      <div className='w-full slider-container my-[30px]'>
       <Slider {...settings}>
-          {Blog.map((data, index) => (
-            <div key={index} className="px-2">
+          {filterBooks.map((data) => (
+            <div key={data._id} className="px-2">
               <PriceCard 
                 title={data.title}
                 description={data.description}
