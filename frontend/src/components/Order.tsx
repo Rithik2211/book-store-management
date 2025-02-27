@@ -2,12 +2,12 @@ import React from 'react'
 
 const Order = () => {
     return (
-        <div className="container mx-auto p-6">
+        <div className="container max-w-screen-2xl w-full p-6 ">
             <h1 className="text-2xl font-semibold mb-4">Your Orders</h1>
 
             <p>No orders found.</p>
 
-            <div className="bg-white rounded shadow-lg p-4">
+            <div className="rounded p-4">
                 <div className="border-b mb-4 pb-4"></div>
                 <h2 className="font-bold">Order ID: 123456</h2>
                 <p className="text-gray-600">Name: Mr Tom</p>
