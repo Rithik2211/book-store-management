@@ -5,7 +5,7 @@ const Order = () => {
         <div className="container max-w-screen-2xl w-full p-6 ">
             <h1 className="text-2xl font-semibold mb-4">Your Orders</h1>
 
-            <p>No orders found.</p>
+            {/* <p>No orders found.</p> */}
 
             <div className="rounded p-4">
                 <div className="border-b mb-4 pb-4"></div>
