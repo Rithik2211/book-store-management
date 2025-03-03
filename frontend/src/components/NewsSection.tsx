@@ -40,7 +40,7 @@ const settings = {
 
 const NewsSection = () => {
   return (
-    <div className='flex flex-col justify-center items-start max-w-7xl w-full  gap-5 mb-[20px]'>
+    <div className='flex flex-col justify-center items-start w-full gap-5 mb-[20px]'>
     <div>
       <h2 className='text-2xl text-text font-semibold'>News</h2>
     </div>
