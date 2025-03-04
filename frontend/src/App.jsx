@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <NavigationBar />
-      <main className='min-h-screen max-w-screen-2xl w-full py-6 font-primary'>
+      <main className='w-full py-6 font-primary'>
         <Outlet />
       </main>
       <Footer />
