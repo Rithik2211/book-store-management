@@ -29,13 +29,13 @@ const settings = {
           initialSlide: 2
         }
       },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
+      // {
+      //   breakpoint: 480,
+      //   settings: {
+      //     slidesToShow: 1,
+      //     slidesToScroll: 1
+      //   }
+      // }
     ]
   };
 
@@ -48,7 +48,7 @@ const RecommendedSlide = () => {
     },[])
 
   return (
-    <div className='flex flex-col justify-center items-start max-w-7xl w-full  gap-5 mb-[20px]'>
+    <div className='flex flex-col justify-center items-start w-full  gap-5 mb-[20px]'>
       <div>
         <h2 className='text-2xl text-text font-semibold'>Recommended for you</h2>
       </div>

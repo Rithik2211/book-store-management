@@ -8,8 +8,8 @@ const NavigationBar = () => {
     navigate('/')
   }
   return (
-    <div className='flex flex-row h-[55px] max-w-screen w-full bg-white border-b-[1.5px] shadow-blue-100-md justify-between items-center text-black fixed top-0 left-0 z-10 px-[25px] md:px-[60px]'>
-        <div className='flex flex-row justify-between items-center w-[250px] md:w-[350px]'>
+    <div className='flex flex-row h-[55px] max-w-7xl w-full bg-white border-b-[1.5px] shadow-blue-100-md justify-between items-center text-black fixed top-0 left-0 z-10 px-[25px] md:px-[60px]'>
+        <div className='flex flex-row justify-between items-center gap-3 w-[250px] md:w-[350px]'>
             <img src='/Menu.svg' alt='title logo' className='w-5 h-5 ' onClick={handleClick}/>
             <div className=' bg-[#EAEAEA] rounded-[5px] px-4 flex flex-row gap-[10px] relative sm:w-72 w-50'>
                 <img src='/Search.svg' alt='basket' className='w-3 h-6'/>

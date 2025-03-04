@@ -5,7 +5,7 @@ const Footer = () => {
     const footerData = ['Privacy Policy', 'Terms of Use', 'Sales and Refunds', 'Legal'];
     const contactImage = ['/Google.svg', '/Instagram.svg', '/Facebook.svg'];
   return (
-    <div className='h-[55px] max-w-screen w-full border-t-[1.5px] flex flex-col md:flex-row justify-between items-center py-6 gap-12 '>
+    <div className='max-w-screen w-full border-t-[1.5px] flex flex-col md:flex-row justify-between items-center py-6 gap-12 '>
         <div className='flex flex-col md:flex-row items-center justify-start text-center gap-[20px]'>
             {
                 footerData?.map((data,index) => 

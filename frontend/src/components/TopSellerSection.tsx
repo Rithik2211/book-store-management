@@ -59,18 +59,18 @@ const TopSellerSection = () => {
           initialSlide: 2
         }
       },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
+      // {
+      //   breakpoint: 480,
+      //   settings: {
+      //     slidesToShow: 1,
+      //     slidesToScroll: 1
+      //   }
+      // }
     ]
   };
 
   return (
-    <div className='flex flex-col justify-center items-start max-w-7xl w-full  gap-5 mb-[20px]'>
+    <div className='flex flex-col justify-center items-start w-full gap-5 mb-[20px]'>
       <div>
         <h2 className='text-2xl text-text font-semibold'>Top Sellers</h2>
       </div>
@@ -101,7 +101,7 @@ const TopSellerSection = () => {
       </FormControl>
      </div>
       <div className='w-full slider-container my-[30px]'>
-      <Slider {...settings}>
+      <Slider {...settings} >
           {filterBooks.map((data) => (
             <div key={data._id} className="px-2">
               <PriceCard 
