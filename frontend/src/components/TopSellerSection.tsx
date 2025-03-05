@@ -52,68 +52,69 @@ const TopSellerSection = () => {
         }
       },
       {
-        breakpoint: 600,
+        breakpoint: 768,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
           initialSlide: 2
         }
       },
-      // {
-      //   breakpoint: 480,
-      //   settings: {
-      //     slidesToShow: 1,
-      //     slidesToScroll: 1
-      //   }
-      // }
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
     ]
   };
 
   return (
-    <div className='flex flex-col justify-center items-start w-full gap-5 mb-[20px]'>
-      <div>
+    <div className='flex flex-col w-full justify-center items-start'>
+      <div className='flex w-full mb-4 sm:mb-6'>
         <h2 className='text-2xl text-text font-semibold'>Top Sellers</h2>
       </div>
-     <div >
-      <FormControl fullWidth sx={{ mt: 2 }}>
-        <Select
-          value={category}
-          onChange={handleChange}
-          displayEmpty
-          style={{ 
-            backgroundColor: '#EAEAEA', 
-            fontSize: '0.875rem',
-            padding: '0',
-            height: '30px',
-            width: '200px',
-            textAlign: 'start',
-          }}
-          sx={{
-            '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
-            '&:hover .MuiOutlinedInput-notchedOutline': { border: 'none' },
-            '&.Mui-focused .MuiOutlinedInput-notchedOutline': { border: 'none' }
-          }}
-        >
-          {dropdown.map((item, index) => (
-            <MenuItem key={index} value={item.value}>{item.label}</MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-     </div>
+      <div className='w-full max-w-[200px]'>
+        <FormControl fullWidth >
+          <Select
+            value={category}
+            onChange={handleChange}
+            displayEmpty
+            className="h-8 sm:h-10 text-xs sm:text-sm"
+            style={{ 
+              backgroundColor: '#EAEAEA', 
+              fontSize: '0.875rem',
+              padding: '0',
+              height: '30px',
+              width: '200px',
+              textAlign: 'start',
+            }}
+            sx={{
+              '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
+              '&:hover .MuiOutlinedInput-notchedOutline': { border: 'none' },
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': { border: 'none' }
+            }}
+          >
+            {dropdown.map((item, index) => (
+              <MenuItem key={index} value={item.value}>{item.label}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
       <div className='w-full slider-container my-[30px]'>
-      <Slider {...settings} >
-          {filterBooks.map((data) => (
-            <div key={data._id} className="px-2">
-              <PriceCard 
-                title={data.title}
-                description={data.description}
-                coverImage={data.coverImage}
-                oldPrice={data.oldPrice}
-                newPrice={data.newPrice}
-              />
-            </div>
-          ))}
-        </Slider>
+        <Slider {...settings} >
+            {filterBooks.map((data) => (
+              <div key={data._id} className="px-2">
+                <PriceCard 
+                  title={data.title}
+                  description={data.description}
+                  coverImage={data.coverImage}
+                  oldPrice={data.oldPrice}
+                  newPrice={data.newPrice}
+                />
+              </div>
+            ))}
+          </Slider>
       </div>
     </div>
   )
