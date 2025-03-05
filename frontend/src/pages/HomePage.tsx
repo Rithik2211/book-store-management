@@ -9,7 +9,7 @@ const HomePage = () => {
     
   return (
     <div className='max-w-screen-2xl w-full min-h-screen'>
-        {/* <HeaderIntro />  */}
+        <HeaderIntro /> 
         <TopSellerSection />
         <RecommendedSlide />
         <NewsSection />
