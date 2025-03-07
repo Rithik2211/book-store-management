@@ -1,0 +1,36 @@
+.slider-container .slick-slider,
+.slider-container .slick-list,
+.slider-container .slick-track {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Ensure slides take appropriate width */
+.slider-container .slick-slide {
+    width: auto !important;
+}
+
+/* Improve arrow positioning */
+.slider-container .slick-prev {
+    left: 10px;
+    z-index: 1;
+}
+
+.slider-container .slick-next {
+    right: 10px;
+    z-index: 1;
+}
+
+/* Optional: Make arrows more visible */
+.slider-container .slick-prev:before,
+.slider-container .slick-next:before {
+    font-size: 24px;
+}
+
+@media (max-width: 640px) {
+
+    .slider-container .slick-prev,
+    .slider-container .slick-next {
+        display: block !important;
+    }
+}

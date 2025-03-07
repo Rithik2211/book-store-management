@@ -3,9 +3,8 @@ import React, { useEffect, useState } from 'react'
 import PriceCard from './PriceCard';
 import Slider from "react-slick";
 import Blog from '../data/blog.json';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import { dropdown } from '../data/dropdown';
+import './Slider.css';
 
 export interface FilterBooksProps{
   _id: number;
@@ -52,18 +51,20 @@ const TopSellerSection = () => {
         }
       },
       {
-        breakpoint: 768,
+        breakpoint: 640,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
-          initialSlide: 2
+          initialSlide: 2,
+          infinite: true,
         }
       },
       {
-        breakpoint: 640,
+        breakpoint: 400,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1
+          slidesToScroll: 1,
+          infinite: true,
         }
       }
     ]
@@ -101,7 +102,7 @@ const TopSellerSection = () => {
           </Select>
         </FormControl>
       </div>
-      <div className='w-full slider-container my-[30px]'>
+      <div className='w-full my-[30px]'>
         <Slider {...settings} >
             {filterBooks.map((data) => (
               <div key={data._id} className="px-2">

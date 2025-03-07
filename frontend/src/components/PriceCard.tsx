@@ -9,9 +9,9 @@ interface PricardProps{
 }
 const PriceCard: FC<PricardProps> = ({title, description, coverImage, oldPrice, newPrice}) => {
     return (
-        <div className="rounded-lg transition-shadow duration-300 max-w-[474px] w-full h-[280px] bg-gray-100">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:h-72 sm:justify-center gap-4">
-                <div className="sm:h-72 sm:flex-shrink-0">
+        <div className="rounded-lg transition-shadow duration-300 max-w-[474px] w-full min-h-[280px] bg-gray-100">
+            <div className="flex flex-row items-center h-72 justify-center gap-4">
+                <div className="h-72 flex-shrink-0">
                     <img
                         src={`/books/${coverImage}`}
                         alt=""

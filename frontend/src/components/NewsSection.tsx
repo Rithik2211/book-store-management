@@ -21,7 +21,7 @@ const settings = {
         }
       },
       {
-        breakpoint: 600,
+        breakpoint: 640,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
@@ -29,7 +29,7 @@ const settings = {
         }
       },
       {
-        breakpoint: 480,
+        breakpoint: 400,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1
@@ -44,7 +44,7 @@ const NewsSection = () => {
     <div>
       <h2 className='text-2xl text-text font-semibold'>News</h2>
     </div>
-    <div className='w-full slider-container my-[30px]'>
+    <div className='w-full my-[30px]'>
     <Slider {...settings}>
         {news.map((data) => (
           <div key={data.id} className="px-2">
