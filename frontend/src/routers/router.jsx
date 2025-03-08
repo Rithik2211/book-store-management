@@ -5,6 +5,7 @@ import ErrorPage from "../pages/ErrorPage";
 import Order from "../components/Order";
 import Checkout from "../components/Checkout";
 import ShoppingCart from "../components/ShoppingCart";
+import Login from "../components/Login";
 
 const router =  createBrowserRouter([
     {
@@ -31,6 +32,10 @@ const router =  createBrowserRouter([
             {
                 path: '/about',
                 element: <h1 className="text-black">About</h1>,
+            },
+            {
+                path: '/login',
+                element: <Login />,
             },
         ]
     },
