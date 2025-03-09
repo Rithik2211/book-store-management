@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const NavigationBar = () => {
     const navigate = useNavigate();
+    const [count, setCount] = useState(0);
 
   const handleClick = () => {
     navigate('/')
@@ -20,7 +21,7 @@ const NavigationBar = () => {
             <img src='/Account.svg' alt='account' className='w-4 h-6' onClick={() => navigate('/login')}/>
             <img src='/Favorite.svg' alt='favorite' className='w-4 h-6 hidden md:block'/>
             <div>
-                <button className='bg-button text-white px-5 py-1 rounded-[8px] flex flex-row gap-1 md:gap-3 text-sm focus:outline-none' onClick={() => navigate('/cart')}><img src='/basket.svg' alt='basket' className='w-3 h-5'/>Basket</button>
+                <button className='bg-button text-white px-5 py-1 rounded-[8px] flex flex-row gap-1 md:gap-3 text-sm focus:outline-none' onClick={() => navigate('/cart')}><img src='/basket.svg' alt='basket' className='w-3 h-5'/>{count}</button>
             </div>
         </div>
     </div>
