@@ -1,0 +1,3 @@
+const bookStoreReducer = () => {
+    return null;
+}
