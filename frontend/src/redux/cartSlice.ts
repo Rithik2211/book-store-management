@@ -41,7 +41,7 @@ export const CartSlice = createSlice({
 
 export const {addItem, removeItem, addQty, removeQty, addPrice, removePrice} = CartSlice.actions;
 
-export const CartItemsValue  = (state : RootState) => state.cart.cartItems
+export const CartItemsValue  = (state : RootState) => state.cart.cartItems;
 export const ProductQtyValue = (state : RootState) => state.cart.productQty;
 export const ProductPriceValue = (state : RootState) => state.cart.productPrice;
 
