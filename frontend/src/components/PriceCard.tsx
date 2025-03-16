@@ -1,13 +1,17 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
+import { FilterBooksProps } from './TopSellerSection';
 
 interface PricardProps{
+    data : FilterBooksProps;
     title: string;
     description: string;
     coverImage: string;
     oldPrice: number;
     newPrice: number;
+    handleAddItemsToCart: (item : FilterBooksProps) => void;
 }
-const PriceCard: FC<PricardProps> = ({title, description, coverImage, oldPrice, newPrice}) => {
+const PriceCard: FC<PricardProps> = ({title, description, coverImage, oldPrice, newPrice, handleAddItemsToCart, data}) => {
+    
     return (
         <div className="rounded-lg transition-shadow duration-300 max-w-[474px] w-full min-h-[280px] bg-gray-100">
             <div className="flex flex-row items-center h-72 justify-center gap-4">
@@ -28,7 +32,7 @@ const PriceCard: FC<PricardProps> = ({title, description, coverImage, oldPrice, 
                         ${newPrice} <span className="line-through font-normal ml-2">${oldPrice}</span>
                     </p>
                     <div className=''>
-                        <button className='bg-button text-white px-5 py-1 rounded-[8px] flex flex-row gap-1 md:gap-3 text-sm focus:outline-none'><img src='/basket.svg' alt='basket' className='w-3 h-5' />Basket</button>
+                        <button className='bg-button text-white px-5 py-1 rounded-[8px] flex flex-row gap-1 md:gap-3 text-sm focus:outline-none' onClick={() => handleAddItemsToCart(data)}><img src='/basket.svg' alt='basket' className='w-3 h-5' />Basket</button>
                     </div>
                 </div>
             </div>

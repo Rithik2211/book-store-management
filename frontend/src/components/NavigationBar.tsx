@@ -7,6 +7,7 @@ const NavigationBar = () => {
     const navigate = useNavigate();
     const [count, setCount] = useState(0);
     const CartItem = useSelector((state : RootState) => state.cart.cartItems) 
+    const ProductItem = useSelector((state: RootState) => state.cart.cartProductItems)
 
   const handleClick = () => {
     navigate('/')
@@ -24,7 +25,7 @@ const NavigationBar = () => {
             <img src='/Account.svg' alt='account' className='w-4 h-6' onClick={() => navigate('/login')}/>
             <img src='/Favorite.svg' alt='favorite' className='w-4 h-6 hidden md:block'/>
             <div>
-                <button className='bg-button text-white px-5 py-1 rounded-[8px] flex flex-row gap-1 md:gap-3 text-sm focus:outline-none' onClick={() => navigate('/cart')}><img src='/basket.svg' alt='basket' className='w-3 h-5'/>{CartItem}</button>
+                <button className='bg-button text-white px-5 py-1 rounded-[8px] flex flex-row gap-1 md:gap-3 text-sm focus:outline-none' onClick={() => navigate('/cart')}><img src='/basket.svg' alt='basket' className='w-3 h-5'/>{ProductItem.length}</button>
             </div>
         </div>
     </div>

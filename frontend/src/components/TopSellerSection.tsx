@@ -5,6 +5,8 @@ import Slider from "react-slick";
 import Blog from '../data/blog.json';
 import { dropdown } from '../data/dropdown';
 import './Slider.css';
+import { useDispatch } from 'react-redux';
+import {addProductItem} from '../redux/cartSlice';
 
 export interface FilterBooksProps{
   _id: number;
@@ -20,6 +22,7 @@ export interface FilterBooksProps{
 const TopSellerSection = () => {
   const [category, setCategory] = useState('books');
   const [filterBooks, setFilterBooks] = useState<FilterBooksProps[]>([]);
+  const dispatch = useDispatch();
 
   const handleChange = (event: SelectChangeEvent) => {
     event.preventDefault();
@@ -70,6 +73,13 @@ const TopSellerSection = () => {
     ]
   };
 
+  const handleAddItemsToCart = (item: FilterBooksProps) => {
+    // dispatch(addItem());
+    // dispatch(addQty());
+    // dispatch(addPrice(newPrice));
+    dispatch(addProductItem(item));
+  }
+
   return (
     <div className='flex flex-col w-full justify-center items-start'>
       <div className='flex w-full mb-4 sm:mb-6'>
@@ -107,11 +117,13 @@ const TopSellerSection = () => {
             {filterBooks.map((data) => (
               <div key={data._id} className="px-2">
                 <PriceCard 
+                  data={data}
                   title={data.title}
                   description={data.description}
                   coverImage={data.coverImage}
                   oldPrice={data.oldPrice}
                   newPrice={data.newPrice}
+                  handleAddItemsToCart={handleAddItemsToCart}
                 />
               </div>
             ))}
