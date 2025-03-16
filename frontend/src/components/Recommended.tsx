@@ -3,6 +3,8 @@ import Slider from 'react-slick/lib/slider';
 import { FilterBooksProps } from './TopSellerSection';
 import PriceCard from './PriceCard';
 import Blog from '../data/blog.json';
+import { useDispatch } from 'react-redux';
+import {addProductItem } from '../redux/cartSlice';
 
 const settings = {
     dots: false,
@@ -41,11 +43,19 @@ const settings = {
 
 const RecommendedSlide = () => {
     const [filterBooks, setFilterBooks] = useState<FilterBooksProps[]>([]);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const filteredBooks = Blog.filter((book) => book.category === 'business');
         setFilterBooks(filteredBooks);
     },[])
+
+    const handleAddItemsToCart = (item: FilterBooksProps) => {
+      // dispatch(addItem());
+      // dispatch(addQty());
+      // dispatch(addPrice(item));
+      dispatch(addProductItem(item));
+    }
 
   return (
     <div className='flex flex-col justify-center items-start w-full  gap-5 mb-[20px]'>
@@ -57,11 +67,13 @@ const RecommendedSlide = () => {
           {filterBooks.map((data) => (
             <div key={data._id} className="px-2">
               <PriceCard
+                data= {data}
                 title={data.title}
                 description={data.description}
                 coverImage={data.coverImage}
                 oldPrice={data.oldPrice}
                 newPrice={data.newPrice}
+                handleAddItemsToCart={handleAddItemsToCart}
               />
             </div>
           ))}

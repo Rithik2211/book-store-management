@@ -1,17 +1,18 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { clearCart } from '../redux/cartSlice';
 
 const ShoppingCart = () => {
 
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const handleClick = (route: string) => {
     navigate(route);
   }
-
-  // const handleClearCart = () = {
-  //   return null
-  // }
+  const handleClearCart = () => {
+    dispatch(clearCart());
+  }
 
   return (
     <div className="flex mt-12 h-full flex-col overflow-hidden bg-gray-100 shadow-xl rounded-[12px]">
@@ -21,8 +22,8 @@ const ShoppingCart = () => {
           <div className="ml-3 flex h-7 items-center ">
             <button
               type="button"
-              // onClick={() => handleClearCart}
-              className="relative -m-2 py-1 px-2 bg-red-500 text-white rounded-md hover:bg-secondary transition-all duration-200  "
+              onClick={handleClearCart}
+              className="relative -m-2 py-1 px-2 bg-red-500 text-white rounded-md hover:bg-secondary transition-all duration-200 focus:outline-none "
             >
               <span className="">Clear Cart</span>
             </button>
@@ -56,7 +57,7 @@ const ShoppingCart = () => {
                         <p className="text-gray-500"><strong>Qty:</strong> 1</p>
 
                         <div className="flex">
-                          <button  type="button" className="font-medium text-white">
+                          <button  type="button" className="font-medium text-white focus:outline-none">
                             Remove
                           </button>
                         </div>
@@ -76,12 +77,12 @@ const ShoppingCart = () => {
         </div>
         <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
         <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-          <button type="button" className="font-medium text-white ml-1" onClick={() => handleClick('/checkout')}>
+          <button type="button" className="font-medium text-white ml-1 focus:outline-none" onClick={() => handleClick('/checkout')}>
             Checkout
           </button>
         </div>
         <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-          <button type="button" className="font-medium text-white ml-1" onClick={() => handleClick('/')}>
+          <button type="button" className="font-medium text-white ml-1 focus:outline-none" onClick={() => handleClick('/')}>
             Continue Shopping
           </button>
         </div>
