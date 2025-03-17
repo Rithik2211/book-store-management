@@ -32,7 +32,10 @@ export const CartSlice = createSlice({
             state.productQty -= 1
         },
         addPrice : (state, action: PayloadAction<number>) => {
-            state.productPrice += action.payload
+            const existingItem = state.cartProductItems.filter((item) => item._id === action.payload)
+            if(!existingItem.length){
+                state.productPrice += action.payload
+            }
         },
         removePrice : (state,  action: PayloadAction<number>) => {
             state.productPrice -= action.payload
@@ -45,12 +48,13 @@ export const CartSlice = createSlice({
         },
         addProductItem : (state, action: PayloadAction<FilterBooksProps>) => {
             const existingItem = state.cartProductItems.filter((item) => item._id === action.payload._id)
-            if(!existingItem){
+            if(!existingItem.length){
                 state.cartProductItems.push(action.payload)
-                alert("Item Added to the Cart!");
+                state.productPrice += action.payload.newPrice
+                // alert("Item Added to the Cart!");
             }
             else{
-                alert("Item Already Exists!");
+                // alert("Item Already Exists!");
             }
         },
         removeProductItem : (state,  action: PayloadAction<number>) => {

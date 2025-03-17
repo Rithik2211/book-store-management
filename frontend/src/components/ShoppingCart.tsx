@@ -1,12 +1,15 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { clearCart } from '../redux/cartSlice';
+import { clearCart, removeProductItem, removePrice } from '../redux/cartSlice';
+import { RootState } from '../redux/store';
 
 const ShoppingCart = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const ProductItem = useSelector((state: RootState) => state.cart.cartProductItems)
+  const ProductPrice = useSelector((state: RootState) => state.cart.productPrice)
   const handleClick = (route: string) => {
     navigate(route);
   }
@@ -32,39 +35,50 @@ const ShoppingCart = () => {
 
         <div className="mt-8">
           <div className="flow-root">
-            
               <ul role="list" className="-my-6 divide-y divide-gray-200">
-                  <li  className="flex py-6">
-                    <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                      <img
-                        alt=""
-                        src="../assets/books/book-1.png"
-                        className="h-full w-full object-cover object-center"
-                      />
-                    </div>
-
-                    <div className="ml-4 flex flex-1 flex-col">
-                      <div>
-                        <div className="flex flex-wrap justify-between text-base font-medium text-gray-900">
-                          <h3>
-                            {/* <Link to='/'>Product Titlee</Link> */}
-                          </h3>
-                          <p className="sm:ml-4">$50</p>
+              {
+                  ProductItem.length ? (
+                    ProductItem?.map((item, index) => {
+                     return <li  className="flex py-6" key={index}>
+                        <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                          <img
+                            alt={item.title}
+                            src={`/books/${item.coverImage}`}
+                            className="h-full w-full object-cover object-center"
+                          />
                         </div>
-                        <p className="mt-1 text-sm text-gray-500 capitalize"><strong>Category:</strong> Fiction</p>
-                      </div>
-                      <div className="flex flex-1 flex-wrap items-end justify-between space-y-2 text-sm">
-                        <p className="text-gray-500"><strong>Qty:</strong> 1</p>
+                        <div className="ml-4 flex flex-1 flex-col">
+                          <div className="flex flex-wrap justify-between text-base font-medium text-gray-900">
+                            <h3>
+                              {item.title}
+                            </h3>
+                            <p className="sm:ml-4">${item.newPrice}</p>
+                          </div>
+                          <p className="flex mt-1 text-sm text-gray-500 capitalize"><strong>Category:</strong> {item.category}</p>
+                          <div className="flex flex-1 flex-wrap items-end justify-between space-y-2 text-sm">
+                            <p className="text-gray-500"><strong>Qty:</strong>1</p>
 
-                        <div className="flex">
-                          <button  type="button" className="font-medium text-white focus:outline-none">
-                            Remove
-                          </button>
+                            <div className="flex">
+                              <button  
+                                type="button" 
+                                className="font-medium text-white focus:outline-none" 
+                                onClick={() => {
+                                  dispatch(removeProductItem(item._id))
+                                  dispatch(removePrice(item.newPrice))
+                                }}
+                              >
+                                Remove
+                              </button>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </li>
-            
+                      </li>
+                    })
+                  )
+                  : (
+                    <div>No Items Found!</div>
+                  )
+                }
               </ul>
           </div>
         </div>
@@ -73,7 +87,7 @@ const ShoppingCart = () => {
       <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
         <div className="flex justify-between text-base font-medium text-gray-900">
           <p>Subtotal</p>
-          <p>$0</p>
+          <p>${ProductPrice.toFixed(2)}</p>
         </div>
         <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
         <div className="mt-6 flex justify-center text-center text-sm text-gray-500">

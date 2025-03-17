@@ -74,9 +74,6 @@ const TopSellerSection = () => {
   };
 
   const handleAddItemsToCart = (item: FilterBooksProps) => {
-    // dispatch(addItem());
-    // dispatch(addQty());
-    // dispatch(addPrice(newPrice));
     dispatch(addProductItem(item));
   }
 

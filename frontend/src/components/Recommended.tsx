@@ -4,7 +4,7 @@ import { FilterBooksProps } from './TopSellerSection';
 import PriceCard from './PriceCard';
 import Blog from '../data/blog.json';
 import { useDispatch } from 'react-redux';
-import {addProductItem } from '../redux/cartSlice';
+import { addProductItem } from '../redux/cartSlice';
 
 const settings = {
     dots: false,
@@ -51,9 +51,6 @@ const RecommendedSlide = () => {
     },[])
 
     const handleAddItemsToCart = (item: FilterBooksProps) => {
-      // dispatch(addItem());
-      // dispatch(addQty());
-      // dispatch(addPrice(item));
       dispatch(addProductItem(item));
     }
 
