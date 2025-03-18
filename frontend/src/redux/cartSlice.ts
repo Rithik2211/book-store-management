@@ -51,10 +51,6 @@ export const CartSlice = createSlice({
             if(!existingItem.length){
                 state.cartProductItems.push(action.payload)
                 state.productPrice += action.payload.newPrice
-                // alert("Item Added to the Cart!");
-            }
-            else{
-                // alert("Item Already Exists!");
             }
         },
         removeProductItem : (state,  action: PayloadAction<number>) => {

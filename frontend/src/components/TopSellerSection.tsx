@@ -1,4 +1,4 @@
-import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import PriceCard from './PriceCard';
 import Slider from "react-slick";
@@ -7,6 +7,8 @@ import { dropdown } from '../data/dropdown';
 import './Slider.css';
 import { useDispatch } from 'react-redux';
 import {addProductItem} from '../redux/cartSlice';
+import { ToastContainer } from 'react-toastify';
+import { getToast } from '../utils/toast';
 
 export interface FilterBooksProps{
   _id: number;
@@ -33,8 +35,6 @@ const TopSellerSection = () => {
     const filteredBooks = Blog.filter((book) => book.category === category);
     setFilterBooks(filteredBooks);
   },[category])
-
-
   
  const settings = {
     dots: false,
@@ -75,6 +75,7 @@ const TopSellerSection = () => {
 
   const handleAddItemsToCart = (item: FilterBooksProps) => {
     dispatch(addProductItem(item));
+    getToast('Product Added to Cart !');
   }
 
   return (
@@ -126,6 +127,18 @@ const TopSellerSection = () => {
             ))}
           </Slider>
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        />
     </div>
   )
 }

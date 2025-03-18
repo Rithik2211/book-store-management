@@ -5,6 +5,8 @@ import PriceCard from './PriceCard';
 import Blog from '../data/blog.json';
 import { useDispatch } from 'react-redux';
 import { addProductItem } from '../redux/cartSlice';
+import { ToastContainer } from 'react-toastify';
+import { getToast } from '../utils/toast';
 
 const settings = {
     dots: false,
@@ -52,6 +54,7 @@ const RecommendedSlide = () => {
 
     const handleAddItemsToCart = (item: FilterBooksProps) => {
       dispatch(addProductItem(item));
+      getToast('Product Added to Cart !');
     }
 
   return (
@@ -76,6 +79,18 @@ const RecommendedSlide = () => {
           ))}
         </Slider>
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        />
     </div>
   )
 }
