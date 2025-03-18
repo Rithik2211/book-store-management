@@ -5,8 +5,6 @@ import { RootState } from '../redux/store';
 
 const NavigationBar = () => {
     const navigate = useNavigate();
-    const [count, setCount] = useState(0);
-    const CartItem = useSelector((state : RootState) => state.cart.cartItems) 
     const ProductItem = useSelector((state: RootState) => state.cart.cartProductItems)
 
   const handleClick = () => {
