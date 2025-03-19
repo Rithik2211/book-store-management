@@ -1,0 +1,14 @@
+{
+  "name": "book-store-backend",
+  "version": "1.0.0",
+  "description": "This is a book store management",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "rithik",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
