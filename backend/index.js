@@ -13,16 +13,27 @@ app.use(cors({
     credentials : true
 }))
 
-app.use('/api/book', bookRoutes);
+app.use('/api/books', bookRoutes);
+
+// Logic to check that the database is connected properly
 
 async function main() {
     try{
         await mongoose.connect(process.env.MONGO_URI);
-        await mongoose.connection.db.admin().command({ping: 1});
+        await mongoose.set('strictQuery', false);
         console.log("You successfully connected to MongoDB!");
-    } finally {
-        await mongoose.disconnect();
+         mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
+         mongoose.connection.once('open', () => {
+        console.log('Database connected');
+        // console.log("You successfully connected to MongoDB!");
+});
+    } 
+    catch(err){
+        console.error(err);
     }
+    // finally {
+    //     await mongoose.connection.close();
+    // }
 }
 
 main()
