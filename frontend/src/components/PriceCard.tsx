@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import { FilterBooksProps } from './TopSellerSection';
+import { useNavigate } from 'react-router-dom';
 
-interface PricardProps{
+interface PriceCardProps{
     data : FilterBooksProps;
     title: string;
     description: string;
@@ -10,12 +11,13 @@ interface PricardProps{
     newPrice: number;
     handleAddItemsToCart: (item : FilterBooksProps) => void;
 }
-const PriceCard: FC<PricardProps> = ({title, description, coverImage, oldPrice, newPrice, handleAddItemsToCart, data}) => {
+const PriceCard: FC<PriceCardProps> = ({title, description, coverImage, oldPrice, newPrice, handleAddItemsToCart, data}) => {
+    const navigate = useNavigate();
     
     return (
-        <div className="rounded-lg transition-shadow duration-300 max-w-[474px] w-full min-h-[280px] bg-gray-100">
+        <div className="rounded-lg transition-shadow duration-300 max-w-[474px] w-full min-h-[280px] bg-gray-100" >
             <div className="flex flex-row items-center h-72 justify-center gap-4">
-                <div className="h-72 flex-shrink-0">
+                <div className="h-72 flex-shrink-0"  onClick={() => navigate(`/bookCard/${data._id}`)}>
                     <img
                         src={`/books/${coverImage}`}
                         alt=""

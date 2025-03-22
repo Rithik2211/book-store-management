@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Slider from 'react-slick/lib/slider';
 import { FilterBooksProps } from './TopSellerSection';
 import PriceCard from './PriceCard';
-import Blog from '../data/blog.json';
 import { useDispatch } from 'react-redux';
 import { addProductItem } from '../redux/cartSlice';
 import { ToastContainer } from 'react-toastify';
 import { getToast } from '../utils/toast';
+import { useFetchAllBooksQuery } from '../redux/books/booksApi';
 
 const settings = {
     dots: false,
@@ -44,13 +44,14 @@ const settings = {
   };
 
 const RecommendedSlide = () => {
-    const [filterBooks, setFilterBooks] = useState<FilterBooksProps[]>([]);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        const filteredBooks = Blog.filter((book) => book.category === 'business');
-        setFilterBooks(filteredBooks);
-    },[])
+    const {data : FilterBooksProps=[], isLoading, isError} = useFetchAllBooksQuery(undefined);
+
+    if(isLoading) return <div>Loading...</div>
+    if(isError) return <div>Error in Getting Details!</div>
+
+    const filteredBooks = FilterBooksProps.filter((book) => book.category === 'business');
 
     const handleAddItemsToCart = (item: FilterBooksProps) => {
       dispatch(addProductItem(item));
@@ -64,7 +65,7 @@ const RecommendedSlide = () => {
       </div>
       <div className='w-full my-[30px]'>
       <Slider {...settings}>
-          {filterBooks.map((data) => (
+          {filteredBooks.map((data) => (
             <div key={data._id} className="px-2">
               <PriceCard
                 data= {data}

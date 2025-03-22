@@ -1,5 +1,9 @@
 export const dropdown = [
     {
+      value: 'choose a genre',
+      label: 'Choose a Genre',
+    },
+    {
       value: 'books',
       label: 'Books',
     },

@@ -1,15 +1,14 @@
 import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react';
 import PriceCard from './PriceCard';
 import Slider from "react-slick";
-import Blog from '../data/blog.json';
 import { dropdown } from '../data/dropdown';
 import './Slider.css';
 import { useDispatch } from 'react-redux';
 import {addProductItem} from '../redux/cartSlice';
 import { ToastContainer } from 'react-toastify';
 import { getToast } from '../utils/toast';
-
+import { useFetchAllBooksQuery } from '../redux/books/booksApi';
 export interface FilterBooksProps{
   _id: number;
   title: string;
@@ -22,20 +21,22 @@ export interface FilterBooksProps{
 }
 
 const TopSellerSection = () => {
-  const [category, setCategory] = useState('books');
+  const [category, setCategory] = useState('choose a genre');
   const [filterBooks, setFilterBooks] = useState<FilterBooksProps[]>([]);
   const dispatch = useDispatch();
 
+  const {data : FilterBooksProps=[], isLoading, isError} = useFetchAllBooksQuery(undefined);
+
+  if(isLoading) return <div>Loading...</div>
+  if(isError) return <div>Error in Getting Details!</div>
+
   const handleChange = (event: SelectChangeEvent) => {
     event.preventDefault();
+    const filteredBooks = category === 'choose a genre' ? FilterBooksProps : FilterBooksProps.filter((book) => book.category === category);
+    setFilterBooks(filteredBooks);
     setCategory(event.target.value as string);
   };
 
-  useEffect(() => {
-    const filteredBooks = Blog.filter((book) => book.category === category);
-    setFilterBooks(filteredBooks);
-  },[category])
-  
  const settings = {
     dots: false,
     infinite: true,
