@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
 import { FilterBooksProps } from './TopSellerSection';
+import { useAuth } from '../context/AuthContext';
+import { Navigate } from 'react-router-dom';
 
 interface AddressProps{
     street : string;
@@ -22,6 +24,7 @@ interface CheckoutProps{
 const Checkout = () => {
     const ProductItem = useSelector((state: RootState) => state.cart.cartProductItems)
     const ProductPrice = useSelector((state: RootState) => state.cart.productPrice)
+    const { currentUser } = useAuth();
     const [checkoutData, setCheckoutData] = useState<CheckoutProps>({
         name : '',
         email : '',
@@ -35,6 +38,10 @@ const Checkout = () => {
         },
         items : ProductItem
     });
+
+    if(!currentUser){
+        return <Navigate to={'/'} replace/>
+    }
 
     const handleSubmitData = (e :React.FormEvent) => {
         e.preventDefault();

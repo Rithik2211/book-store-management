@@ -8,6 +8,7 @@ import ShoppingCart from "../components/ShoppingCart";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import BookCard from "../components/BookCard";
+import PrivateRoute from "./privateRoute";
 
 const router =  createBrowserRouter([
     {
@@ -25,7 +26,7 @@ const router =  createBrowserRouter([
             },
             {
                 path: '/checkout',
-                element: <Checkout />,
+                element: <PrivateRoute><Checkout /></PrivateRoute>,
             },
             {
                 path: '/cart',

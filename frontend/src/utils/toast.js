@@ -1,8 +1,8 @@
 import { toast } from 'react-toastify';
 
-export const getToast = (text) => {
+export const getToast = (text, position = "bottom-right") => {
     return toast.success(text, {
-        position: "bottom-right",
+        position: position,
         autoClose: 2000,
         hideProgressBar: true,
         closeOnClick: false,
