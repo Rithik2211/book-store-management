@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { useAuth } from '../context/AuthContext';
@@ -58,6 +58,9 @@ const NavigationBar = () => {
                         {isDropDownOpen && (
                             <div className='absolute right-0 top-10 mt-2 w-48 shadow-lg rounded-md z-40'>
                                 <ul>
+                                    <li>
+                                        <Link to={'/orders'}>Order Page</Link>
+                                    </li>
                                     <li>
                                         <button 
                                           className='bg-button text-white text-center px-5 py-1 rounded-[8px] flex flex-row justify-center items-center gap-1 md:gap-3 text-sm focus:outline-none w-full' 

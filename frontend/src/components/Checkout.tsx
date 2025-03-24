@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
-import { FilterBooksProps } from './TopSellerSection';
 import { useAuth } from '../context/AuthContext';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useCreateOrderMutation } from '../redux/orders/ordersApi';
+import { getToast } from '../utils/toast';
+import { ToastContainer } from 'react-toastify';
 
 interface AddressProps{
     street : string;
@@ -12,12 +14,13 @@ interface AddressProps{
     state  : string;
     zipcode : string;
 }
-interface CheckoutProps{
+export interface CheckoutProps{
     name : string;
     email : string;
     phone : string;
     address : AddressProps;
-    items : FilterBooksProps[];
+    productIds : number[];
+    totalPrice : number;
 }
 
 
@@ -25,6 +28,7 @@ const Checkout = () => {
     const ProductItem = useSelector((state: RootState) => state.cart.cartProductItems)
     const ProductPrice = useSelector((state: RootState) => state.cart.productPrice)
     const { currentUser } = useAuth();
+    const navigate = useNavigate();
     const [checkoutData, setCheckoutData] = useState<CheckoutProps>({
         name : '',
         email : '',
@@ -36,16 +40,27 @@ const Checkout = () => {
             state: '',
             zipcode: ''
         },
-        items : ProductItem
+        productIds : ProductItem.map((item) => item._id),
+        totalPrice : ProductPrice
     });
+
+    const [ createOrder, {isLoading, error}] = useCreateOrderMutation();
 
     if(!currentUser){
         return <Navigate to={'/'} replace/>
     }
 
-    const handleSubmitData = (e :React.FormEvent) => {
+    const handleSubmitData = async(e :React.FormEvent) => {
         e.preventDefault();
-        console.log("Submitted checkout submit", checkoutData);
+        try{
+            await createOrder(checkoutData).unwrap();
+            getToast('Your Order has been Created Successfully!!', 'top-center');
+            navigate(`/orders`);
+        }
+        catch(err){
+            console.error("Error in Placing an order", err);
+            alert("Failed to place an Order!");
+        }
     }
 
     const handleInputData = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,6 +79,8 @@ const Checkout = () => {
             }
         });
     }
+
+    if(isLoading) return <div>Loading...</div>
     
     return (
         <div className="max-w-screen-2xl w-full min-h-screen p-6 bg-gray-100 rounded-[12px]">
@@ -147,6 +164,18 @@ const Checkout = () => {
                         </form>
                     </div>
             </div>
+            <ToastContainer
+                position="top-center"
+                autoClose={2000}
+                hideProgressBar={true}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </div>
     )
 }

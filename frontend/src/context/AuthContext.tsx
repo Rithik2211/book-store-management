@@ -8,6 +8,7 @@ interface AuthContextType {
     loginUser : (email: string, password: string) => Promise<any>;
     signInWithGoogle: any;
     logoutUser: any;
+    loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -68,7 +69,8 @@ export const AuthProvider :FC<AuthProviderProps> = ({children}) => {
         registerUser,
         loginUser,
         signInWithGoogle,
-        logoutUser
+        logoutUser,
+        loading
     };
 
     return (

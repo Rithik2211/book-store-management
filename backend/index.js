@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bookRoutes = require('./src/books/book.route');
+const orderRoutes = require('./src/orders/order.route');
+const userRoutes = require('./src/users/user.route');
 require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5001;
@@ -14,6 +16,8 @@ app.use(cors({
 }))
 
 app.use('/api/books', bookRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/auth', userRoutes);
 
 // Logic to check that the database is connected properly
 

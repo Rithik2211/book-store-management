@@ -42,7 +42,11 @@ const orderSchema = new mongoose.Schema({
             ref : 'Book',
             required : true
         }
-    ]
+    ],
+    totalPrice : {
+        type : Number,
+        required : true
+    }
 },{
     timeStamp : true
 })
