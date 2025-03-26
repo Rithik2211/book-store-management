@@ -9,6 +9,8 @@ import Login from "../components/Login";
 import Register from "../components/Register";
 import BookCard from "../components/BookCard";
 import PrivateRoute from "./privateRoute";
+import AdminRoute from "./AdminRoute";
+import AdminLogin from "../components/AdminLogin";
 
 const router =  createBrowserRouter([
     {
@@ -50,6 +52,37 @@ const router =  createBrowserRouter([
             },
         ]
     },
+    {
+        path : '/admin',
+        element :<AdminLogin />,
+        errorElement: <ErrorPage />,
+        children : [
+
+        ]
+    },
+    {
+        path: '/dashboard',
+        element : <AdminRoute><div>Admin Dashboards</div></AdminRoute>,
+        errorElement : <ErrorPage />,
+        children : [
+            {
+                path : "",
+                element : <AdminRoute><div>Dashboard Home</div></AdminRoute>,
+            },
+            {
+                path : "add-new-book",
+                element : <AdminRoute><div>Add New Book</div></AdminRoute>,
+            },
+            {
+                path : "edit-book/:id",
+                element : <AdminRoute><div>Edit Book</div></AdminRoute>,
+            },
+            {
+                path : "manage-books",
+                element : <AdminRoute><div>Manage Books</div></AdminRoute>,
+            },
+        ]
+    }
 ]);
 
 export default router;

@@ -5,14 +5,14 @@ const verifyAdminToken = (req, res, next) => {
     const token = req.headers['authorization']?.split(' ')[1];
 
     if(!token){
-        return res.send(401).json({
+        return res.status(401).json({
             message : "Access Denied!. No token provided!"
         })
     }
 
     jwt.verify(token, JWT_SECRET, (err, user) => {
         if(err){
-            return res.send(403).json({
+            return res.status(403).json({
                 message : "Invalid Credentials!"
             })
         }
