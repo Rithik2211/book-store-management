@@ -5,12 +5,13 @@ const getAdmin = async(req, res) => {
     const {username, password} = req.body;
     try{
         const JWT_SECRET = process.env.JWT_SECRET;
-        const getAdmin = await User.findOne({username});
+        const getAdmin = await User.findOne({username : username});
+        console.log("getAdmin", getAdmin, JWT_SECRET);
         if (!getAdmin) {
             res.status(404).send({message : "Admin Not Found!"});
         }
         if(getAdmin.password !== password){
-            res.status(404).send({message : "Invalid Password!"});
+            res.status(401).send({message : "Invalid Password!"});
         }
 
         const token = jwt.sign(

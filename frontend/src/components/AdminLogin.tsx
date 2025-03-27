@@ -27,7 +27,8 @@ const AdminLogin = () => {
     const handleLoginSubmit = async(e : FormEvent) => {
         e.preventDefault();
         try{
-            const response = await axios.post(`${getBaseUrl}/api/auth/admin`, loginData, {
+            console.log("getBaseUrl", getBaseUrl())
+            const response = await axios.post(`${getBaseUrl()}/api/auth/admin`, loginData, {
                 headers: {
                   'Content-Type': 'application/json'
                 }
@@ -40,7 +41,7 @@ const AdminLogin = () => {
                     localStorage.removeItem('token');
                     alert("Token Has been Expired!");
                     navigate('/');
-                })
+                }, 3600*1000)
             }
             alert("Admin Login Sucessfull");
             navigate('/');

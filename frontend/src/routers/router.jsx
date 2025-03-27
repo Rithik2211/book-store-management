@@ -11,6 +11,8 @@ import BookCard from "../components/BookCard";
 import PrivateRoute from "./privateRoute";
 import AdminRoute from "./AdminRoute";
 import AdminLogin from "../components/AdminLogin";
+import DashboardHome from "../components/Admin/DashboardHome";
+import AdminDashboard from "../components/Admin/AdminDashboard";
 
 const router =  createBrowserRouter([
     {
@@ -62,12 +64,12 @@ const router =  createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element : <AdminRoute><div>Admin Dashboards</div></AdminRoute>,
+        element : <AdminRoute><AdminDashboard /></AdminRoute>,
         errorElement : <ErrorPage />,
         children : [
             {
                 path : "",
-                element : <AdminRoute><div>Dashboard Home</div></AdminRoute>,
+                element : <AdminRoute><DashboardHome /></AdminRoute>,
             },
             {
                 path : "add-new-book",

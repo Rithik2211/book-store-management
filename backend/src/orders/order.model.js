@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { type } = require('os');
 
 const orderSchema = new mongoose.Schema({
     name : {
