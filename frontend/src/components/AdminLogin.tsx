@@ -1,4 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
+import axios from 'axios';
+import getBaseUrl from '../utils/baseUrl';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginProps {
     username: string;
@@ -12,7 +15,7 @@ const initialLoginValue: LoginProps = {
 
 const AdminLogin = () => {
     const [loginData, setLoginData] = useState<LoginProps>(initialLoginValue);
-    const [message, setMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setLoginData({
@@ -24,12 +27,26 @@ const AdminLogin = () => {
     const handleLoginSubmit = async(e : FormEvent) => {
         e.preventDefault();
         try{
-            console.log("Message Data", loginData)
-            setMessage('');
+            const response = await axios.post(`${getBaseUrl}/api/auth/admin`, loginData, {
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              })
+            const auth = response.data
+            console.log("Message Data", auth);
+            if(auth.token){
+                localStorage.setItem('token', auth.token);
+                setTimeout(() => {
+                    localStorage.removeItem('token');
+                    alert("Token Has been Expired!");
+                    navigate('/');
+                })
+            }
+            alert("Admin Login Sucessfull");
+            navigate('/');
         }
         catch(err){
             console.error("Please provide a Valid Email and Password", err);
-            setMessage("Please provide a Valid Email and Password");
         }
     }
 
@@ -50,15 +67,12 @@ const AdminLogin = () => {
                 <div className="md:col-span-5 flex flex-col items-start w-full my-2">
                     <label className='text-sm font-medium'>Password</label>
                     <input 
-                        type="password" name="passowrd" id="password" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 appearance-none focus:shadow focus:outline-none"
+                        type="password" name="password" id="password" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 appearance-none focus:shadow focus:outline-none"
                         autoComplete="true"
                         placeholder="Enter Password" 
                         onChange={(e) => handleInputChange(e)}
                     />
                 </div>
-                {
-                  message &&  <p className='text-red-500 text-xs italic mb-3'>{message}</p>
-                }
                 <button type="submit" className='bg-button text-center text-white px-5 rounded-[8px] flex flex-row gap-1 md:gap-3 text-sm focus:outline-none mb-2'>Login</button>
             </form>
             <div className='flex flex-col gap-2 w-full'>
