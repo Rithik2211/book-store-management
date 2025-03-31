@@ -184,14 +184,6 @@ const AddBooks = () => {
             }
             
             // Replace with your actual API endpoint
-            // const response = await fetch('your-api-endpoint', {
-            //     method: 'POST',
-            //     body: formData
-            // });
-            
-            // if (!response.ok) {
-            //     throw new Error('Failed to add book');
-            // }
             
             setTimeout(() => {
                 setIsSubmitting(false);
