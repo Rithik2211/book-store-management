@@ -138,34 +138,34 @@ const AddBooks = () => {
         }
     };
 
-    const validateForm = () => {
-        if (!bookData.title.trim()) {
-            return false;
-        }
-        if (!bookData.description.trim()) {
-            return false;
-        }
-        if (!bookData.category || bookData.category === 'choose a genre') {
-            return false;
-        }
-        if (!bookData.img) {
-            return false;
-        }
-        if (bookData.oldPrice <= 0) {
-            return false;
-        }
-        if (bookData.newPrice <= 0) {
-            return false;
-        }
-        return true;
-    };
+    // const validateForm = () => {
+    //     if (!bookData.title.trim()) {
+    //         return false;
+    //     }
+    //     if (!bookData.description.trim()) {
+    //         return false;
+    //     }
+    //     if (!bookData.category || bookData.category === 'choose a genre') {
+    //         return false;
+    //     }
+    //     if (!bookData.img) {
+    //         return false;
+    //     }
+    //     if (bookData.oldPrice <= 0) {
+    //         return false;
+    //     }
+    //     if (bookData.newPrice <= 0) {
+    //         return false;
+    //     }
+    //     return true;
+    // };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         
-        if (!validateForm()) {
-            return;
-        }
+        // if (!validateForm()) {
+        //     return;
+        // }
         
         setIsSubmitting(true);
         
