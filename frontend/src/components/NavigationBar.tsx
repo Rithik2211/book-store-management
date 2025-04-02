@@ -62,6 +62,9 @@ const NavigationBar = () => {
                                         <Link to={'/orders'}>Order Page</Link>
                                     </li>
                                     <li>
+                                        <Link to={'/dashboard'}>Dashboard</Link>
+                                    </li>
+                                    <li>
                                         <button 
                                           className='bg-button text-white text-center px-5 py-1 rounded-[8px] flex flex-row justify-center items-center gap-1 md:gap-3 text-sm focus:outline-none w-full' 
                                           onClick={handleLogout}>
