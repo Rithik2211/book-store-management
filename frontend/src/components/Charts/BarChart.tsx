@@ -10,8 +10,6 @@ interface BarchartDataProps{
 const BarChart:FC<BarchartDataProps> = ({barChartLabel, barChartAverage}) => {
     const barRef = useRef<HTMLDivElement>(null);
 
-    console.log("Barchart", barChartLabel, barChartAverage)
-
     useEffect(() => {
 
         if (barRef.current) {

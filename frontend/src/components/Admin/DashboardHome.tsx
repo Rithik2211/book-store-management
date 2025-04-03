@@ -1,17 +1,41 @@
 import { BookOpenCheck, ChartPie, Pencil, Plus, TrendingDown, TrendingUp } from 'lucide-react';
-import React from 'react'
-import PieChart from '../Charts/PieChart';
-import BarChart from '../Charts/BarChart';
+import React, { useEffect, useState } from 'react';
 import { useFetchAllBooksQuery } from '../../redux/books/booksApi';
-import { CircularProgress } from '@mui/material';
-import OrderTable from '../Charts/OrderTable';
 import { useNavigate } from 'react-router-dom';
+import DashboardAnalytics from './DashboardAnalytics';
+import DashboardCollections from './DashboardCollections';
+import DashboardHistory from './DashboardHistory';
+import axios from 'axios';
+import getBaseUrl from '../../utils/baseUrl';
+import Spinner from '../Spinner';
 
 const DashboardHome = () => {
+  const [Loading, setLoading] = useState(true);
+  const [data, setData] = useState({});
   const navigate = useNavigate();
   const {data : FilterBooksProps=[], isLoading, isError} = useFetchAllBooksQuery(undefined);
 
   const trendingBooks = FilterBooksProps.filter((book) => book.trending === true);
+
+  useEffect(() => {
+    const fetchData = async() => {
+      try{
+        const response = await axios.get(`${getBaseUrl}/api/admin`, {
+          headers : {
+            'Authorization' : `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type' : 'application/json'
+          }
+        });
+        setData(response.data);
+        setLoading(false);
+      }
+      catch(err){
+        console.error("Error in connecting admin", err);
+        setLoading(false);
+      }
+    }
+    fetchData();
+  },[]);
 
   const getCategoryCount = (category : string) => {
     return FilterBooksProps.filter((book) => book.category === category);
@@ -29,8 +53,12 @@ const DashboardHome = () => {
     return acc;
 }, [] as { name: string; value: number }[]);
 
+  if(Loading){
+    return <Spinner />
+  }
+
   if (isLoading){
-    return <CircularProgress />
+    return <Spinner />
   }
   if (isError){
     return <div>Error While Getting the data</div>
@@ -58,8 +86,6 @@ const DashboardHome = () => {
     
     return acc;
 }, [] as number[]);
-
-
 
   return (
     <div className='w-full h-full flex flex-col'>
@@ -111,14 +137,13 @@ const DashboardHome = () => {
             </div>
           </div>
       </div>
-      <div className='flex flex-row justify-between items-center gap-3 my-[30px] mx-[5px]'>
-        <PieChart pieChartData={pieChartData}/>
-        <BarChart barChartLabel={barChartLabel} barChartAverage={barChartAverage}/>
-      </div>
-      <div className='flex flex-col gap-3 my-[30px] mx-[5px]'>
-        <h2 className='text-start text-2xl font-medium text-gray-600'>Order Details</h2>
-        <OrderTable />
-      </div>
+      <DashboardAnalytics 
+        pieChartData={pieChartData}
+        barChartLabel={barChartLabel} 
+        barChartAverage={barChartAverage}
+      />
+      <DashboardCollections />
+      <DashboardHistory />
     </div>
   )
 }

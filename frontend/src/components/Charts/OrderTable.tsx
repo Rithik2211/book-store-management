@@ -1,55 +1,143 @@
 import { Paper } from '@mui/material';
 import React from 'react';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridValueFormatter, GridValueGetter } from '@mui/x-data-grid';
+import { FilterBooksProps } from '../TopSellerSection';
 
-const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'firstName', headerName: 'First name', width: 130 },
-    { field: 'lastName', headerName: 'Last name', width: 130 },
-    {
-      field: 'age',
-      headerName: 'Age',
-      type: 'number',
-      width: 90,
-    },
-    {
-      field: 'fullName',
-      headerName: 'Full name',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-      valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
-    },
-  ];
-  
-  const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  ];
-  
-  const paginationModel = { page: 0, pageSize: 5 };
-  
-
-const OrderTable = () => {
-    return (
-        <Paper sx={{ height: 400, width: '100%' }}>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            initialState={{ pagination: { paginationModel } }}
-            pageSizeOptions={[5, 10]}
-            checkboxSelection
-            sx={{ border: 0 }}
-          />
-        </Paper>
-      );
+interface BookData {
+  _id: string;
+  title: string;
+  description: string;
+  category: string;
+  trending: boolean;
+  coverImage: string;
+  oldPrice: number;
+  newPrice: number;
+  createdAt: string;
+  __v: number;
 }
+
+// Define columns for the book data
+const columns: GridColDef[] = [
+  { field: 'title', headerName: 'Title', width: 200 },
+  { 
+    field: 'description', 
+    headerName: 'Description', 
+    width: 300,
+    renderCell: (params: any) => {
+      return (
+        <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {params.value}
+        </div>
+      );
+    }
+  },
+  { field: 'category', headerName: 'Category', width: 130 },
+  { 
+    field: 'trending', 
+    headerName: 'Trending', 
+    width: 100,
+    type: 'boolean'
+  },
+  // { 
+  //   field: 'oldPrice', 
+  //   headerName: 'Old Price ($)', 
+  //   type: 'number',
+  //   width: 120,
+  //   valueFormatter: (params: any) => {
+  //     if (params && params.value != null) {
+  //       return `$${Number(params.value).toFixed(2)}`;
+  //     }
+  //     return '';
+  //   }
+  // },
+  // { 
+  //   field: 'newPrice', 
+  //   headerName: 'New Price ($)', 
+  //   type: 'number',
+  //   width: 120,
+  //   valueFormatter: (params: any) => {
+  //     if (params && params.value != null) {
+  //       return `$${Number(params.value).toFixed(2)}`;
+  //     }
+  //     return '';
+  //   }
+  // },
+  // { 
+  //   field: 'discount', 
+  //   headerName: 'Discount (%)', 
+  //   width: 120,
+  //   valueGetter: (params: any) => {
+  //     const oldPrice = params.row.oldPrice;
+  //     const newPrice = params.row.newPrice;
+  //     if (oldPrice && newPrice) {
+  //       const discount = ((oldPrice - newPrice) / oldPrice) * 100;
+  //       return discount.toFixed(0);
+  //     }
+  //     return '0';
+  //   },
+  //   valueFormatter: (params: any) => {
+  //     if (params && params.value != null) {
+  //       return `${params.value}%`;
+  //     }
+  //     return '0%';
+  //   }
+  // },
+];
+
+// Example book data
+const bookRows: BookData[] = [
+  {
+    "_id": "67ddc945e0213266a7f277f9",
+    "title": "Four Thousand Weeks",
+    "description": "Nobody needs to be told there isn't enough time. We're obsessed with our lengthening to-do lists, overfilled inboxes, work-life balance, and ceaseless battle against distraction; we're deluged with advice on becoming more productive and efficient",
+    "category": "business",
+    "trending": false,
+    "coverImage": "book-20.png",
+    "oldPrice": 24.99,
+    "newPrice": 14.99,
+    "createdAt": "2025-03-21T20:17:09.309Z",
+    "__v": 0
+  },
+  {
+    "_id": "67ddbcc18544d2c9d4d89ce0",
+    "title": "Mastering SEO in 2024",
+    "description": "Tips and tricks to boost your SEO and rank higher on search engines.",
+    "category": "marketing",
+    "trending": true,
+    "coverImage": "book-3.png",
+    "oldPrice": 39.99,
+    "newPrice": 29.99,
+    "createdAt": "2025-03-21T19:23:45.923Z",
+    "__v": 0
+  }
+];
+
+const paginationModel = { page: 0, pageSize: 5 };
+
+interface OrderTableProps {
+  books?: FilterBooksProps[];
+}
+
+const OrderTable: React.FC<OrderTableProps> = ({ books = bookRows }) => {
+  return (
+    <Paper sx={{ height: 400, width: '100%', margin: '10px 0' }}>
+      <DataGrid
+        rows={books}
+        columns={columns}
+        getRowId={(row) => row.title}
+        initialState={{ pagination: { paginationModel } }}
+        pageSizeOptions={[5, 10, 25]}
+        checkboxSelection
+        disableRowSelectionOnClick
+        sx={{ 
+          border: 0,
+          '& .MuiDataGrid-cell': {
+            textOverflow: 'ellipsis'
+          }
+        }}
+      />
+    </Paper>
+  );
+};
 
 export default OrderTable;

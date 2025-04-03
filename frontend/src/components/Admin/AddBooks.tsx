@@ -1,8 +1,10 @@
-import { FormControl, FormControlLabel, MenuItem, Select, SelectChangeEvent, styled, Switch, SwitchProps } from '@mui/material';
+import { CircularProgress, FormControl, FormControlLabel, MenuItem, Select, SelectChangeEvent, styled, Switch, SwitchProps } from '@mui/material';
 import React, { ChangeEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { dropdown } from '../../data/dropdown';
+import { useAddBookMutation } from '../../redux/books/booksApi';
+import { getToast } from '../../utils/toast';
 
 const IOSSwitch = styled((props: SwitchProps) => (
     <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
@@ -63,7 +65,6 @@ const IOSSwitch = styled((props: SwitchProps) => (
       }),
     },
   }));
-  
 
 interface AddBookProps {
     img: string | File;
@@ -91,6 +92,7 @@ const AddBooks = () => {
     const [category, setCategory] = useState('choose a genre');
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [addBook, {isLoading, isError}] = useAddBookMutation();
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -170,31 +172,41 @@ const AddBooks = () => {
         setIsSubmitting(true);
         
         try {
-            const formData = new FormData();
-            formData.append('title', bookData.title);
-            formData.append('description', bookData.description);
-            formData.append('oldPrice', bookData.oldPrice.toString());
-            formData.append('newPrice', bookData.newPrice.toString());
-            formData.append('category', bookData.category);
-            formData.append('isTrending', bookData.isTrending.toString());
-            
-            // Add the image file
-            if (typeof bookData.img !== 'string') {
-                formData.append('image', bookData.img);
-            }
-            
-            // Replace with your actual API endpoint
-            
-            setTimeout(() => {
-                setIsSubmitting(false);
-                setTimeout(() => navigate("/dashboard"), 2000);
-            }, 1000);
+
+            const file = bookData.img as File;
+            const reader = new FileReader();
+
+            reader.onloadend = async() => {
+                const modifiedBookData = {
+                    ...bookData,
+                    coverImage : reader.result as string
+                }
+
+                console.log("Submitting the Book Data", modifiedBookData);
+                await addBook(modifiedBookData);
+                getToast('Your Book has been Added Successfully!!', 'top-center');
+                // Replace with your actual API endpoint
+                
+                setTimeout(() => {
+                    setIsSubmitting(false);
+                    setTimeout(() => navigate("/dashboard"), 2000);
+                }, 1000);
+            };
+            reader.readAsDataURL(file);
             
         } catch (error) {
             console.error('Error adding book:', error);
             setIsSubmitting(false);
         }
     };
+
+    if(isLoading){
+        return <CircularProgress />
+    }
+
+    if(isError){
+        return <div>Error in Adding Book...</div>
+    }
 
     return (
         <div className='container max-w-screen-2xl w-full p-6 '>

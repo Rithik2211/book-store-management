@@ -2,13 +2,16 @@ import { IconButton, Tooltip } from '@mui/material';
 import { Bell, LogOut, UserRound } from 'lucide-react';
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import GetIconNav from '../../utils/getIconNav';
 
 const AdminNav = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
   }, []);
+
+  const handleLogout = () => {
+    
+  }
 
 return (
   <div className='flex flex-row h-[55px] max-w-screen w-full bg-white border-b-[1.5px] shadow-blue-100-md justify-between items-center text-black fixed top-0 left-0 z-10 px-[25px] md:px-[60px]'>
@@ -17,7 +20,7 @@ return (
       </div>
       <div className='flex flex-row justify-between items-center w-auto gap-[15px] md:gap-[30px] relative'>
         <Tooltip title="User" placement="bottom">
-            <IconButton>
+            <IconButton onClick={() => navigate('/')}>
                 <UserRound className='w-5 h-5'/>
             </IconButton>
         </Tooltip>
@@ -27,7 +30,7 @@ return (
             </IconButton>
         </Tooltip>
         <Tooltip title="Logout" placement="bottom">
-            <IconButton>
+            <IconButton onClick={handleLogout}>
                 <LogOut className='w-5 h-5'/>
             </IconButton>
         </Tooltip>
