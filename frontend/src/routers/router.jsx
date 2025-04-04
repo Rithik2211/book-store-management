@@ -17,6 +17,7 @@ import ManageBooks from "../components/Admin/ManageBooks";
 import AddBooks from "../components/Admin/AddBooks";
 import DashboardHistory from "../components/Admin/DashboardHistory";
 import DashboardCollections from "../components/Admin/DashboardCollections";
+import EditBook from "../components/Admin/EditBook";
 
 const router =  createBrowserRouter([
     {
@@ -89,7 +90,7 @@ const router =  createBrowserRouter([
             },
             {
                 path : "edit-book/:id",
-                element : <AdminRoute><div>Edit Book</div></AdminRoute>,
+                element : <AdminRoute><EditBook /></AdminRoute>,
             },
             {
                 path : "manage-books",

@@ -2,6 +2,9 @@ import { Paper } from '@mui/material';
 import React from 'react';
 import { DataGrid, GridColDef, GridValueFormatter, GridValueGetter } from '@mui/x-data-grid';
 import { FilterBooksProps } from '../TopSellerSection';
+import { useNavigate } from 'react-router-dom';
+import { Pencil, Trash2 } from 'lucide-react';
+import { useDeleteBookByIdMutation } from '../../redux/books/booksApi';
 
 interface BookData {
   _id: string;
@@ -15,74 +18,6 @@ interface BookData {
   createdAt: string;
   __v: number;
 }
-
-// Define columns for the book data
-const columns: GridColDef[] = [
-  { field: 'title', headerName: 'Title', width: 200 },
-  { 
-    field: 'description', 
-    headerName: 'Description', 
-    width: 300,
-    renderCell: (params: any) => {
-      return (
-        <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-          {params.value}
-        </div>
-      );
-    }
-  },
-  { field: 'category', headerName: 'Category', width: 130 },
-  { 
-    field: 'trending', 
-    headerName: 'Trending', 
-    width: 100,
-    type: 'boolean'
-  },
-  // { 
-  //   field: 'oldPrice', 
-  //   headerName: 'Old Price ($)', 
-  //   type: 'number',
-  //   width: 120,
-  //   valueFormatter: (params: any) => {
-  //     if (params && params.value != null) {
-  //       return `$${Number(params.value).toFixed(2)}`;
-  //     }
-  //     return '';
-  //   }
-  // },
-  // { 
-  //   field: 'newPrice', 
-  //   headerName: 'New Price ($)', 
-  //   type: 'number',
-  //   width: 120,
-  //   valueFormatter: (params: any) => {
-  //     if (params && params.value != null) {
-  //       return `$${Number(params.value).toFixed(2)}`;
-  //     }
-  //     return '';
-  //   }
-  // },
-  // { 
-  //   field: 'discount', 
-  //   headerName: 'Discount (%)', 
-  //   width: 120,
-  //   valueGetter: (params: any) => {
-  //     const oldPrice = params.row.oldPrice;
-  //     const newPrice = params.row.newPrice;
-  //     if (oldPrice && newPrice) {
-  //       const discount = ((oldPrice - newPrice) / oldPrice) * 100;
-  //       return discount.toFixed(0);
-  //     }
-  //     return '0';
-  //   },
-  //   valueFormatter: (params: any) => {
-  //     if (params && params.value != null) {
-  //       return `${params.value}%`;
-  //     }
-  //     return '0%';
-  //   }
-  // },
-];
 
 // Example book data
 const bookRows: BookData[] = [
@@ -119,12 +54,78 @@ interface OrderTableProps {
 }
 
 const OrderTable: React.FC<OrderTableProps> = ({ books = bookRows }) => {
+  const navigate = useNavigate();
+  const [deleteBook, { isLoading: isDeleting }] = useDeleteBookByIdMutation();
+
+  const handleEdit = (id: string) => {
+    navigate(`/edit-book/${id}`);
+  };
+
+  // Handle delete book action
+  const handleDelete = async (id: string) => {
+    if (window.confirm('Are you sure you want to delete this book?')) {
+      try {
+        await deleteBook(id).unwrap();
+        // The RTK Query cache will be automatically updated on successful deletion
+      } catch (error) {
+        console.error('Failed to delete the book:', error);
+        alert('Failed to delete the book. Please try again.');
+      }
+    }
+  };
+
+
+  // Define columns for the book data
+  const columns: GridColDef[] = [
+    { field: 'title', headerName: 'Title', headerAlign: 'left', width: 200 },
+    { field: 'category', headerName: 'Category', headerAlign: 'left', width: 130 },
+    { 
+      field: 'newPrice', 
+      headerName: 'Price ($)', 
+      headerAlign: 'left',
+      type: 'number',
+      align: 'left',
+      width: 130,
+      renderCell: (params: any) => {
+        return (
+          <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {
+              `${Number(params.value).toFixed(2)}`
+            }
+          </div>
+        );
+      }
+    },
+    { field: 'actions', 
+      headerName: 'Actions',
+      headerAlign: 'left',
+      width: 220,
+      align: 'center',
+      renderCell: (params: any) => {
+        return (
+          <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '3', textAlign: 'center', marginTop: '6px' }}>
+              <button 
+               className='flex flex-row gap-2 justify-between items-center bg-white text-black border-black border-1 text-sm'
+               onClick={() => handleEdit(params.row._id)}
+               disabled={isDeleting}
+               > <Pencil className='w-4 h-5' /> Edit </button>
+              <button 
+               className='flex flex-row gap-2 justify-between items-center text-sm' 
+               onClick={() => handleDelete(params.row._id)}
+               disabled={isDeleting}
+               > <Trash2 className='w-4 h-5' /> Delete </button>
+          </div>
+        );
+      }
+    },
+  ];
+
   return (
     <Paper sx={{ height: 400, width: '100%', margin: '10px 0' }}>
       <DataGrid
-        rows={books}
+        rows={books.length > 0 ? books : bookRows}
         columns={columns}
-        getRowId={(row) => row.title}
+        getRowId={(row) => row._id}
         initialState={{ pagination: { paginationModel } }}
         pageSizeOptions={[5, 10, 25]}
         checkboxSelection
