@@ -20,7 +20,7 @@ const DashboardHome = () => {
   useEffect(() => {
     const fetchData = async() => {
       try{
-        const response = await axios.get(`${getBaseUrl}/api/admin`, {
+        const response = await axios.get(`${getBaseUrl()}/api/admin`, {
           headers : {
             'Authorization' : `Bearer ${localStorage.getItem('token')}`,
             'Content-Type' : 'application/json'
@@ -142,7 +142,7 @@ const DashboardHome = () => {
         barChartLabel={barChartLabel} 
         barChartAverage={barChartAverage}
       />
-      <DashboardCollections />
+      {/* <DashboardCollections /> */}
       <DashboardHistory />
     </div>
   )
