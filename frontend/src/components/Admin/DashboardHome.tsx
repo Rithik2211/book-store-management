@@ -143,7 +143,7 @@ const DashboardHome = () => {
         barChartAverage={barChartAverage}
       />
       {/* <DashboardCollections /> */}
-      <DashboardHistory />
+      {/* <DashboardHistory /> */}
     </div>
   )
 }
