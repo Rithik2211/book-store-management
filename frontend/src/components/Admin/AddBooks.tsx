@@ -211,144 +211,144 @@ const AddBooks = () => {
     return (
         <div className='container max-w-screen-2xl w-full p-6 '>
             <div className='min-w-[500px] md:min-w-[550px] border p-4 rounded-md shadow-md flex flex-col justify-center items-center'>
-                <form className='flex flex-col gap-4 items-start w-full' onSubmit={handleSubmit}>
-                    <h2 className='text-2xl text-text font-semibold'>Add Book Details Here</h2>
-                    
-                    <div className="md:col-span-5 flex flex-col items-start w-full">
-                        <label className='text-sm font-medium'>Title</label>
-                        <input 
-                            type="text" 
-                            id="title" 
-                            name="title" 
-                            value={bookData.title}
-                            className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 appearance-none focus:shadow focus:outline-none"
-                            placeholder="Enter Book Name"  
-                            onChange={handleInputChange} 
-                            required
-                        />
-                    </div>
-                    
-                    <div className="md:col-span-5 flex flex-col items-start w-full">
-                        <label className='text-sm font-medium'>Description</label>
-                        <input 
-                            type="text" 
-                            id="description" 
-                            name="description" 
-                            value={bookData.description}
-                            className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 appearance-none focus:shadow focus:outline-none"
-                            placeholder="Enter Description" 
-                            onChange={handleInputChange} 
-                            required
-                        />
-                    </div>
-                    
-                    <div className="md:col-span-5 flex flex-col items-start w-full">
-                        <label className='text-sm font-medium'>Category</label>
-                        <div className='w-full max-w-[200px] mt-2'>
-                            <FormControl fullWidth >
-                            <Select
-                                value={bookData.category || 'choose a genre'}
-                                onChange={handleCategoryChange}
-                                displayEmpty
-                                className="h-8 sm:h-10 text-xs sm:text-sm"
-                                style={{ 
-                                backgroundColor: '#f3f4f6', 
-                                fontSize: '0.875rem',
-                                padding: '0',
-                                height: '40px',
-                                width: '200px',
-                                textAlign: 'start',
-                                borderRadius: '6px'
-                                }}
-                                sx={{
-                                '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
-                                '&:hover .MuiOutlinedInput-notchedOutline': { border: 'none' },
-                                '&.Mui-focused .MuiOutlinedInput-notchedOutline': { border: 'none' }
-                                }}
-                            >
-                                {dropdown.map((item, index) => (
-                                <MenuItem key={index} value={item.value}>{item.label}</MenuItem>
-                                ))}
-                            </Select>
-                            </FormControl>
+                    <form className='flex flex-col gap-4 items-start w-full' onSubmit={handleSubmit}>
+                        <h2 className='text-2xl text-text font-semibold'>Add Book Details Here</h2>
+                        
+                        <div className="md:col-span-5 flex flex-col items-start w-full">
+                            <label className='text-sm font-medium'>Title</label>
+                            <input 
+                                type="text" 
+                                id="title" 
+                                name="title" 
+                                value={bookData.title}
+                                className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 appearance-none focus:shadow focus:outline-none"
+                                placeholder="Enter Book Name"  
+                                onChange={handleInputChange} 
+                                required
+                            />
                         </div>
-                    </div>
-                    
-                    <div className="md:col-span-5 flex flex-col items-start w-full">
-                        <FormControlLabel
-                            control={
-                                <IOSSwitch 
-                                    sx={{ m: 1 }} 
-                                    checked={bookData.isTrending}
-                                    onChange={handleSwitchChange}
-                                />
-                            }
-                            label="Is Trending"
-                        />
-                    </div>
-                    
-                    <div className="md:col-span-5 flex flex-col items-start w-full">
-                        <label className='text-sm font-medium'>Upload Image</label>
-                        <input 
-                            type="file" 
-                            id="img" 
-                            name="img" 
-                            accept="image/*"
-                            className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 appearance-none focus:shadow focus:outline-none"
-                            onChange={handleFileChange} 
-                            required
-                        />
-                        {imagePreview && (
-                            <div className="mt-2">
-                                <img 
-                                    src={imagePreview} 
-                                    alt="Book preview" 
-                                    className="h-32 object-contain border rounded" 
-                                />
+                        
+                        <div className="md:col-span-5 flex flex-col items-start w-full">
+                            <label className='text-sm font-medium'>Description</label>
+                            <input 
+                                type="text" 
+                                id="description" 
+                                name="description" 
+                                value={bookData.description}
+                                className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 appearance-none focus:shadow focus:outline-none"
+                                placeholder="Enter Description" 
+                                onChange={handleInputChange} 
+                                required
+                            />
+                        </div>
+                        
+                        <div className="md:col-span-5 flex flex-col items-start w-full">
+                            <label className='text-sm font-medium'>Category</label>
+                            <div className='w-full max-w-[200px] mt-2'>
+                                <FormControl fullWidth >
+                                <Select
+                                    value={bookData.category || 'choose a genre'}
+                                    onChange={handleCategoryChange}
+                                    displayEmpty
+                                    className="h-8 sm:h-10 text-xs sm:text-sm"
+                                    style={{ 
+                                    backgroundColor: '#f3f4f6', 
+                                    fontSize: '0.875rem',
+                                    padding: '0',
+                                    height: '40px',
+                                    width: '200px',
+                                    textAlign: 'start',
+                                    borderRadius: '6px'
+                                    }}
+                                    sx={{
+                                    '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
+                                    '&:hover .MuiOutlinedInput-notchedOutline': { border: 'none' },
+                                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': { border: 'none' }
+                                    }}
+                                >
+                                    {dropdown.map((item, index) => (
+                                    <MenuItem key={index} value={item.value}>{item.label}</MenuItem>
+                                    ))}
+                                </Select>
+                                </FormControl>
                             </div>
-                        )}
-                    </div>
-                    
-                    <div className="md:col-span-5 flex flex-col items-start w-full">
-                        <label className='text-sm font-medium'>Old Price</label>
-                        <input 
-                            type="number" 
-                            id="oldPrice" 
-                            name="oldPrice" 
-                            value={bookData.oldPrice || ''}
-                            className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 appearance-none focus:shadow focus:outline-none"
-                            placeholder="Enter Old Price" 
-                            onChange={handleInputChange} 
-                            min="0"
-                            step="0.01"
-                            required
-                        />
-                    </div>
-                    
-                    <div className="md:col-span-5 flex flex-col items-start w-full">
-                        <label className='text-sm font-medium'>New Price</label>
-                        <input 
-                            type="number" 
-                            id="newPrice" 
-                            name="newPrice" 
-                            value={bookData.newPrice || ''}
-                            className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 appearance-none focus:shadow focus:outline-none"
-                            placeholder="Enter New Price" 
-                            onChange={handleInputChange} 
-                            min="0"
-                            step="0.01"
-                            required
-                        />
-                    </div>
-                    
-                    <button 
-                        type='submit' 
-                        className='bg-button text-white px-5 py-2 rounded-[8px] flex flex-row gap-1 md:gap-3 text-sm focus:outline-none disabled:opacity-50' 
-                        disabled={isSubmitting}
-                    >
-                        {isSubmitting ? 'Adding...' : 'Add Book'}
-                    </button>
-                </form>
+                        </div>
+                        
+                        <div className="md:col-span-5 flex flex-col items-start w-full">
+                            <FormControlLabel
+                                control={
+                                    <IOSSwitch 
+                                        sx={{ m: 1 }} 
+                                        checked={bookData.isTrending}
+                                        onChange={handleSwitchChange}
+                                    />
+                                }
+                                label="Is Trending"
+                            />
+                        </div>
+                        
+                        <div className="md:col-span-5 flex flex-col items-start w-full">
+                            <label className='text-sm font-medium'>Upload Image</label>
+                            <input 
+                                type="file" 
+                                id="img" 
+                                name="img" 
+                                accept="image/*"
+                                className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 appearance-none focus:shadow focus:outline-none"
+                                onChange={handleFileChange} 
+                                required
+                            />
+                            {imagePreview && (
+                                <div className="mt-2">
+                                    <img 
+                                        src={imagePreview} 
+                                        alt="Book preview" 
+                                        className="h-32 object-contain border rounded" 
+                                    />
+                                </div>
+                            )}
+                        </div>
+                        
+                        <div className="md:col-span-5 flex flex-col items-start w-full">
+                            <label className='text-sm font-medium'>Old Price</label>
+                            <input 
+                                type="number" 
+                                id="oldPrice" 
+                                name="oldPrice" 
+                                value={bookData.oldPrice || ''}
+                                className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 appearance-none focus:shadow focus:outline-none"
+                                placeholder="Enter Old Price" 
+                                onChange={handleInputChange} 
+                                min="0"
+                                step="0.01"
+                                required
+                            />
+                        </div>
+                        
+                        <div className="md:col-span-5 flex flex-col items-start w-full">
+                            <label className='text-sm font-medium'>New Price</label>
+                            <input 
+                                type="number" 
+                                id="newPrice" 
+                                name="newPrice" 
+                                value={bookData.newPrice || ''}
+                                className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 appearance-none focus:shadow focus:outline-none"
+                                placeholder="Enter New Price" 
+                                onChange={handleInputChange} 
+                                min="0"
+                                step="0.01"
+                                required
+                            />
+                        </div>
+                        
+                        <button 
+                            type='submit' 
+                            className='bg-button text-white px-5 py-2 rounded-[8px] flex flex-row gap-1 md:gap-3 text-sm focus:outline-none disabled:opacity-50' 
+                            disabled={isSubmitting}
+                        >
+                            {isSubmitting ? 'Adding...' : 'Add Book'}
+                        </button>
+                    </form>
             </div>
         <ToastContainer
             position="top-center"

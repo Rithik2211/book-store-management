@@ -58,7 +58,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ books = bookRows }) => {
   const [deleteBook, { isLoading: isDeleting }] = useDeleteBookByIdMutation();
 
   const handleEdit = (id: string) => {
-    navigate(`/edit-book/${id}`);
+    navigate(`/dashboard/edit-book/${id}`);
   };
 
   // Handle delete book action

@@ -6,6 +6,7 @@ import { addProductItem } from '../redux/cartSlice';
 import { BooksDataProps } from '../interfaces/bookDataProps';
 import { getToast } from '../utils/toast';
 import { ToastContainer } from 'react-toastify';
+import Spinner from './Spinner';
 
 const BookCard = () => {
     const {id} = useParams();
@@ -13,7 +14,7 @@ const BookCard = () => {
     const navigate = useNavigate();
     const { data: BooksDataProps = {}, isLoading, isError } = useFetchBookByIdQuery(id);
 
-    if(isLoading) return <div>Loading...</div>
+    if(isLoading) return <Spinner />
     if(isError) return <div>Error in Getting Details!</div>
 
     const handleAddItemsToCart = (item: BooksDataProps) => {

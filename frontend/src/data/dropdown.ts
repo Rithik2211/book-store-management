@@ -8,6 +8,10 @@ export const dropdown = [
       label: 'Books',
     },
     {
+      value: 'business',
+      label: 'Business',
+    },
+    {
       value: 'marketing',
       label: 'Marketing',
     },

@@ -142,8 +142,8 @@ const DashboardHome = () => {
         barChartLabel={barChartLabel} 
         barChartAverage={barChartAverage}
       />
-      {/* <DashboardCollections /> */}
-      {/* <DashboardHistory /> */}
+      <DashboardCollections />
+      <DashboardHistory />
     </div>
   )
 }

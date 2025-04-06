@@ -2,13 +2,14 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import OrderTable from '../Charts/OrderTable';
 import { useFetchAllBooksQuery } from '../../redux/books/booksApi';
+import Spinner from '../Spinner';
 
 const ManageBooks = () => {
     const navigate = useNavigate();
     const {data : FilterBooksProps=[], isLoading, isError} = useFetchAllBooksQuery(undefined);
 
     if(isLoading){
-      return <div>Loading Books Table...</div>
+      return <Spinner />
     }
 
     if(isError){
