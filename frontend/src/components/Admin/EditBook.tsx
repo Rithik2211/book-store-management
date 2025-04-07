@@ -6,6 +6,8 @@ import { FormControl, FormControlLabel, MenuItem, Select, SelectChangeEvent, Swi
 import Spinner from '../Spinner';
 import { dropdown } from '../../data/dropdown';
 import { getToast } from '../../utils/toast';
+import axios from 'axios';
+import getBaseUrl from '../../utils/baseUrl';
 
 const IOSSwitch = styled((props: SwitchProps) => (
     <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
@@ -91,11 +93,25 @@ const EditBook = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [bookData, setBookData] = useState<AddBookProps>(initialBookValue);
-    const { data: BooksDataProps = {}, isLoading, isError } = useFetchBookByIdQuery(id);
-    const [updateBookById, { isLoading: isUpdating }] = useUpdateBookByIdMutation();
+    const { data: BooksDataProps = {}, isLoading, isError, refetch } = useFetchBookByIdQuery(id);
+    const [updateBookById, { isLoading: isUpdating, isError: isErrorUpdating }] = useUpdateBookByIdMutation();
+
+    useEffect(() => {
+        if (BooksDataProps && Object.keys(BooksDataProps).length > 0) {
+            setBookData({
+                img: BooksDataProps.coverImage || '',
+                title: BooksDataProps.title || '',
+                description: BooksDataProps.description || '',
+                oldPrice: BooksDataProps.oldPrice || 0,
+                newPrice: BooksDataProps.newPrice || 0,
+                category: BooksDataProps.category || '',
+                isTrending: BooksDataProps.isTrending || false,
+            });
+        }
+    }, [BooksDataProps]);
 
     if(isLoading || isUpdating) return <Spinner />
-    if(isError) return <div>Error in Getting Book Details!</div>
+    if(isError || isErrorUpdating) return <div>Error in Getting Book Details!</div>
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -112,20 +128,6 @@ const EditBook = () => {
             });
         }
     }
-
-    useEffect(() => {
-        if (BooksDataProps && Object.keys(BooksDataProps).length > 0) {
-            setBookData({
-                img: BooksDataProps.coverImage || '',
-                title: BooksDataProps.title || '',
-                description: BooksDataProps.description || '',
-                oldPrice: BooksDataProps.oldPrice || 0,
-                newPrice: BooksDataProps.newPrice || 0,
-                category: BooksDataProps.category || '',
-                isTrending: BooksDataProps.isTrending || false,
-            });
-        }
-    }, [BooksDataProps]);
 
     const handleSwitchChange = (e: ChangeEvent<HTMLInputElement>) => {
         setBookData({
@@ -144,12 +146,19 @@ const EditBook = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try{
-            await updateBookById({
-                id,
-                ...bookData
-            }).unwrap();
+            await axios.put(`${getBaseUrl()}/api/books/edit/${id}`, bookData, {
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authentication': `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            // await updateBookById({
+            //     id,
+            //     ...bookData
+            // }).unwrap();
+            await refetch();
             
-            getToast('Successfully Edited the Book!');
+            getToast('Successfully Edited the Book!', 'bottom-right');
             
             setTimeout(() => {
                 navigate("/dashboard/manage-books");
@@ -163,7 +172,7 @@ const EditBook = () => {
 
     return (
         <div>
-        <div className="flex flex-row items-center h-72 justify-center gap-4">
+        <div className="flex flex-col md:flex-row items-center h-72 justify-center gap-4">
              <div className="h-72 flex-shrink-0">
                  <img
                      src={`/books/${BooksDataProps.coverImage}`}
@@ -172,8 +181,8 @@ const EditBook = () => {
                  />
              </div>
  
-             <div className='p-4 flex flex-col justify-start items-start text-start'>
-                 <form className='flex flex-col gap-4 items-start w-full' onSubmit={handleSubmit}>
+             <div className='p-4 flex flex-col justify-start items-start text-start w-[250px] md:w-[500px]'>
+                 <form className='flex flex-col gap-4 items-start w-full ' onSubmit={handleSubmit}>
                         <h2 className='text-2xl text-text font-semibold'>Edit Book Details Here</h2>
                         
                         <div className="md:col-span-5 flex flex-col items-start w-full">

@@ -6,7 +6,7 @@ import Spinner from '../Spinner';
 
 const ManageBooks = () => {
     const navigate = useNavigate();
-    const {data : FilterBooksProps=[], isLoading, isError} = useFetchAllBooksQuery(undefined);
+    const {data : FilterBooksProps=[], isLoading, isError, refetch} = useFetchAllBooksQuery(undefined);
 
     if(isLoading){
       return <Spinner />
@@ -18,7 +18,7 @@ const ManageBooks = () => {
   return (
     <div className='flex flex-col justify-between items-center gap-3 w-full'>
         <h1>Manage Books page</h1>
-        <OrderTable books={FilterBooksProps}/>
+        <OrderTable books={FilterBooksProps} refetch={refetch}/>
         <button className='flex flex-row gap-2 justify-between items-center text-sm' onClick={() => navigate("/dashboard")}> Back to Dashboard</button>
     </div>
   )

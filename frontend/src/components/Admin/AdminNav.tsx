@@ -20,7 +20,7 @@ return (
       </div>
       <div className='flex flex-row justify-between items-center w-auto gap-[15px] md:gap-[30px] relative'>
         <Tooltip title="User" placement="bottom">
-            <IconButton onClick={() => navigate('/')}>
+            <IconButton onClick={() => navigate('/admin')}>
                 <UserRound className='w-5 h-5'/>
             </IconButton>
         </Tooltip>

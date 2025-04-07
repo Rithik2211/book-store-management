@@ -51,9 +51,10 @@ const paginationModel = { page: 0, pageSize: 5 };
 
 interface OrderTableProps {
   books?: FilterBooksProps[];
+  refetch?: any;
 }
 
-const OrderTable: React.FC<OrderTableProps> = ({ books = bookRows }) => {
+const OrderTable: React.FC<OrderTableProps> = ({ books = bookRows, refetch }) => {
   const navigate = useNavigate();
   const [deleteBook, { isLoading: isDeleting }] = useDeleteBookByIdMutation();
 
@@ -66,7 +67,8 @@ const OrderTable: React.FC<OrderTableProps> = ({ books = bookRows }) => {
     if (window.confirm('Are you sure you want to delete this book?')) {
       try {
         await deleteBook(id).unwrap();
-        // The RTK Query cache will be automatically updated on successful deletion
+        alert("Book Deleted Successfully!");
+        refetch();
       } catch (error) {
         console.error('Failed to delete the book:', error);
         alert('Failed to delete the book. Please try again.');
